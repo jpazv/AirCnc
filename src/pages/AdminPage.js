@@ -280,6 +280,7 @@ function AdminPage() {
             </Content>
           </GridItem>
         ))}
+        
         {selectedListing && (
           <Popup>
             <CloseButton onClick={handleClosePopup}>X</CloseButton>
