@@ -10,6 +10,7 @@ function RegisterPage() {
     // Implementar lógica de registro aqui
   };
 
+  
   return (
     <div>
       <h2>Registro</h2>
