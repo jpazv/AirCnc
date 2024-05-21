@@ -290,7 +290,7 @@ function AdminPage() {
             <Description>
               {showFullDescription ? selectedListing.description : `${selectedListing.description.substring(0, 150)}...`}
             </Description>
-            <MoreButton onClick={handleToggleDescription}>
+            <MoreButton onClick={handleToggleDescription}> 
               {showFullDescription ? 'Mostrar menos' : 'Saber mais'}
             </MoreButton>
             <Button onClick={handleClosePopup}>Reservar</Button>
