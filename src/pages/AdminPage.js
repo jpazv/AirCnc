@@ -5,9 +5,10 @@ import hotelaria2 from '../assets/hotelaria2.svg';
 import hotelaria3 from '../assets/hotelaria3.svg';
 import hotelaria4 from '../assets/hotelaria4.svg';
 import hotelaria5 from '../assets/hotelaria5.svg';
-import userLogo from '../assets/userLogo.svg';
 import logo from '../assets/logo.svg';
 import searchLogo from '../assets/searchIcon.svg';
+import UserCardComponent from '../components/UserCard';
+import CalendarPopup from '../components/CalendarPopup';
 
 const Header = styled.header`
   display: flex;
@@ -19,10 +20,6 @@ const Header = styled.header`
 
 const Logo = styled.img`
   height: 100px;
-`;
-
-const UserLogo = styled.img`
-  height: 50px;
   cursor: pointer;
 `;
 
@@ -32,11 +29,11 @@ const SearchBar = styled.div`
 
   input {
     padding: 10px;
-    padding-right: 30px; // Espaço para o logo de pesquisa
-    border: 2px solid #ccc; // Aumenta a grossura da linha do input
+    padding-right: 30px;
+    border: 2px solid #ccc;
     border-radius: 50px;
     width: 100%;
-    transition: padding 0.3s ease; // Adiciona uma transição suave ao padding
+    transition: padding 0.3s ease;
   }
 
   img {
@@ -45,34 +42,34 @@ const SearchBar = styled.div`
     top: 50%;
     transform: translateY(-50%);
     height: 30px;
-    transition: height 0.3s ease; // Adiciona uma transição suave à altura
+    transition: height 0.3s ease;
   }
 
   input:focus {
-    padding-right: 35px; // Aumenta o padding-right quando o input está focado
+    padding-right: 35px;
   }
 
   input:focus + img {
-    height: 50px; // Aumenta o tamanho do logo quando o input está focado
+    height: 50px;
   }
 `;
 
-
 const GridContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(4, 1fr); // Isso limita o número de itens por linha para 4
+  grid-template-columns: repeat(4, 1fr);
   gap: 20px;
-  padding: 20px 15%; // Adiciona padding à esquerda e à direita
+  padding: 20px 15%;
 `;
+
 const GridItem = styled.div`
-  border: 2px solid #ccc; // Aumenta a grossura da borda
+  border: 2px solid #ccc;
   border-radius: 10px;
   overflow: hidden;
   cursor: pointer;
   display: flex;
-  flex-direction: column; // Isso faz com que a imagem e o conteúdo sejam empilhados verticalmente
-  position: relative; // Isso permite que o Rating seja posicionado em relação ao GridItem
-  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1); // Adiciona uma leve sombra
+  flex-direction: column;
+  position: relative;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
 `;
 
 const ImageContainer = styled.div`
@@ -86,15 +83,15 @@ const Image = styled.img`
 `;
 
 const Rating = styled.p`
-color: black; // Muda a cor da estrela para preto
-position: absolute;
-top: 10px;
-right: 10px;
+  color: black;
+  position: absolute;
+  top: 10px;
+  right: 10px;
 `;
 
 const Content = styled.div`
   padding: 10px;
-  flex-grow: 1; // Isso faz com que o conteúdo ocupe todo o espaço restante abaixo da imagem
+  flex-grow: 1;
 `;
 
 const Title = styled.h3`
@@ -128,7 +125,7 @@ const Popup = styled.div`
   padding: 20px;
   background-color: #fff;
   border-radius: 10px;
-  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1); // Adiciona uma leve sombra, semelhante ao card
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
   text-align: center;
   z-index: 1000;
 `;
@@ -136,9 +133,9 @@ const Popup = styled.div`
 const MoreButton = styled.button`
   background: transparent;
   border: none;
-  color: blue; // Faz com que pareça um link de texto
+  color: blue;
   cursor: pointer;
-  margin-bottom: 20px; // Aumenta o espaço entre o botão "Saber mais" e o botão "Reservar"
+  margin-bottom: 20px;
 `;
 
 const Button = styled.button`
@@ -153,14 +150,12 @@ const Button = styled.button`
     background-color: #555;
   }
 `;
- const Description = styled.p`
-  max-width: 600px; // Isso faz com que o texto quebre em linhas de tamanho semelhante
-  text-align: justify; // Isso alinha o texto à esquerda e à direita
-  margin-bottom: 20px; // Adiciona espaço abaixo da descrição
+
+const Description = styled.p`
+  max-width: 600px;
+  text-align: justify;
+  margin-bottom: 20px;
 `;
-
-
-
 
 const CloseButton = styled.button`
   position: absolute;
@@ -172,7 +167,6 @@ const CloseButton = styled.button`
   cursor: pointer;
 `;
 
-
 const PopupBackground = styled.div`
   position: fixed;
   top: 0;
@@ -183,6 +177,7 @@ const PopupBackground = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 999;
 `;
 
 const Footer = styled.footer`
@@ -191,7 +186,7 @@ const Footer = styled.footer`
   width: 100%;
   padding: 20px;
   background-color: #fff;
-  border-top: 1px solid #ccc; // Linha cinza para delimitar o conteúdo do site e o conteúdo do rodapé
+  border-top: 1px solid #ccc;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -207,28 +202,54 @@ const LeftContent = styled.div`
 `;
 
 const RightContent = styled.div`
-padding-right: 40px;
+  padding-right: 40px;
   display: flex;
   align-items: center;
 `;
 
+const UserCardWrapper = styled.div`
+  position: relative;
+`;
 
+const UserCardPopup = styled.div`
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 300px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+`;
+
+const NotificationIndicator = styled.div`
+  width: 10px;
+  height: 10px;
+  background-color: red;
+  border-radius: 50%;
+  position: absolute;
+  top: -5px;
+  right: -5px;
+`;
 
 function AdminPage() {
   const [selectedListing, setSelectedListing] = useState(null);
   const [searchValue, setSearchValue] = useState('');
   const [filterValue, setFilterValue] = useState('');
   const [showFullDescription, setShowFullDescription] = useState(false);
-
+  const [showUserCard, setShowUserCard] = useState(false);
+  const [notifications, setNotifications] = useState(false);
+  const [showCalendar, setShowCalendar] = useState(false);
+  const [reservations, setReservations] = useState([]);
 
   const listings = [
-    { id: 1, title: 'Paris', price: '$100', rating: '4,6', image: hotelaria, location: 'Paris, França', description: 'Esta acomodação encantadora oferece uma experiência única com vistas deslumbrantes e comodidades modernas. Localizada em um bairro tranquilo, é o lugar perfeito para relaxar e descontrair. A casa é espaçosa e bem iluminada, com uma decoração elegante e uma atmosfera acolhedora.' },
-    { id: 2, title: 'Londres', price: '$200', rating: '4,6', image: hotelaria2, location: 'Londres, Reino Unido', description: 'Desfrute do luxo e do conforto nesta bela acomodação. Com uma vista panorâmica da cidade, esta propriedade oferece uma experiência inesquecível. A casa é equipada com todas as comodidades modernas e tem um interior elegante e sofisticado.' },
-    { id: 3, title: 'Barcelona', price: '$100', rating: '4,6', image: hotelaria3, location: 'Barcelona, Espanha', description: 'Situada em um local sereno, esta acomodação é um refúgio perfeito para aqueles que procuram uma escapadela tranquila. A casa é aconchegante e convidativa, com um belo jardim e uma vista deslumbrante. É o lugar perfeito para relaxar e rejuvenescer.' },
-    { id: 4, title: 'Rio de Janeiro', price: '$200', rating: '4.6', image: hotelaria4, location: 'Rio de Janeiro, Brasil', description: 'Esta acomodação luxuosa oferece uma estadia inigualável com seu design elegante e comodidades de última geração. Localizada no coração da cidade, oferece fácil acesso a restaurantes, lojas e atrações locais. A casa é espaçosa e bem iluminada, proporcionando um ambiente acolhedor e relaxante.' },
-    { id: 5, title: 'Tokyo', price: '$200', rating: '4.8', image: hotelaria5, location: 'Tokyo, Japão', description: 'Experimente o melhor da vida nesta acomodação deslumbrante. Com vistas panorâmicas e um interior luxuoso, esta casa oferece uma estadia verdadeiramente memorável. A propriedade está convenientemente localizada perto de atrações populares e oferece uma variedade de comodidades para garantir uma estadia confortável.' },
+    { id: 1, title: 'Paris', price: '$100', rating: '4,6', image: hotelaria, location: 'Paris, França', date: 'mar 5-9', description: 'Esta acomodação encantadora oferece uma experiência única com vistas deslumbrantes e comodidades modernas. Localizada em um bairro tranquilo, é o lugar perfeito para relaxar e descontrair. A casa é espaçosa e bem iluminada, com uma decoração elegante e uma atmosfera acolhedora.' },
+    { id: 2, title: 'Londres', price: '$200', rating: '4,6', image: hotelaria2, location: 'Londres, Reino Unido', date: 'mar 5-9', description: 'Desfrute do luxo e do conforto nesta bela acomodação. Com uma vista panorâmica da cidade, esta propriedade oferece uma experiência inesquecível. A casa é equipada com todas as comodidades modernas e tem um interior elegante e sofisticado.' },
+    { id: 3, title: 'Barcelona', price: '$100', rating: '4,6', image: hotelaria3, location: 'Barcelona, Espanha', date: 'mar 5-9', description: 'Situada em um local sereno, esta acomodação é um refúgio perfeito para aqueles que procuram uma escapadela tranquila. A casa é aconchegante e convidativa, com um belo jardim e uma vista deslumbrante. Desfrute da tranquilidade e da beleza natural que esta propriedade oferece.' },
+    { id: 4, title: 'Nova Iorque', price: '$100', rating: '4,6', image: hotelaria4, location: 'Nova Iorque, EUA', date: 'mar 5-9', description: 'Localizada no coração da cidade, esta acomodação oferece fácil acesso a todas as principais atrações. A casa é moderna e elegante, com um design contemporâneo e comodidades de primeira classe. Desfrute do conforto e da conveniência desta propriedade excepcional.' },
+    { id: 5, title: 'Tokyo', price: '$200', rating: '4,8', image: hotelaria5, location: 'Tokyo, Japão', date: 'mar 5-9', description: 'Experimente o melhor da vida nesta acomodação deslumbrante. Com vistas panorâmicas e um interior luxuoso, esta casa oferece uma estadia verdadeiramente memorável. A propriedade está convenientemente localizada perto de atrações populares e oferece uma variedade de comodidades para garantir uma estadia confortável.' },
   ];
-
 
   const handleOpenPopup = (listing) => {
     setSelectedListing(listing);
@@ -249,40 +270,107 @@ function AdminPage() {
     }
   };
 
-  const filteredListings = listings.filter(listing => listing.title.toLowerCase().includes(filterValue.toLowerCase()));
+  const handleToggleCard = () => {
+    setShowUserCard(!showUserCard);
+  };
 
+  const handleCloseUserCard = (event) => {
+    if (event.target.id === 'user-card-popup') {
+      setShowUserCard(false);
+    }
+  };
+
+  const handleReservation = async (listing) => {
+    const reservationData = {
+      userId: 1, // Supondo que o ID do usuário seja 1, ajuste conforme necessário
+      listingId: listing.id,
+      date: listing.date,
+    };
+
+    try {
+      const response = await fetch('http://your-api-endpoint.com/reservations', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(reservationData),
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const data = await response.json();
+      console.log('Reservation successful:', data);
+      setNotifications(true); // Define a notificação como verdadeira em caso de sucesso
+      setReservations([...reservations, reservationData]); // Adiciona a reserva ao estado
+      handleClosePopup();
+    } catch (error) {
+      console.error('Error making reservation:', error);
+    }
+  };
 
   const handleToggleDescription = (event) => {
     event.stopPropagation(); // Isso impede que o evento de clique se propague para o PopupBackground
     setShowFullDescription(!showFullDescription);
   };
 
+  const handleOpenCalendar = () => {
+    setShowCalendar(true);
+    setNotifications(false); // Reseta as notificações ao abrir o calendário
+  };
+
+  const handleCloseCalendar = () => {
+    setShowCalendar(false);
+  };
+
+  const filteredListings = listings.filter(listing => listing.title.toLowerCase().includes(filterValue.toLowerCase()));
+
   return (
     <div>
       <Header>
-        <Logo src={logo} alt="AirCnC" />
+        <Logo src={logo} alt="AirCnC" onClick={() => window.location.reload()} />
         <SearchBar>
-          <input type="text" placeholder="Search..." id="search-input" value={searchValue} onChange={handleSearchChange} onKeyPress={handleSearchSubmit} />
+          <input
+            type="text"
+            placeholder="Search..."
+            id="search-input"
+            value={searchValue}
+            onChange={handleSearchChange}
+            onKeyPress={handleSearchSubmit}
+          />
           <img src={searchLogo} alt="Search" />
         </SearchBar>
-        <UserLogo src={userLogo} alt="User" onClick={({})} />
+        <UserCardWrapper onClick={handleToggleCard}>
+          <UserCardComponent />
+          {notifications && <NotificationIndicator />} {/* Mostra a bolinha de notificação */}
+        </UserCardWrapper>
       </Header>
+      {showUserCard && (
+        <div id="user-card-popup" onClick={handleCloseUserCard}>
+          <UserCardPopup>
+            <UserCardComponent />
+          </UserCardPopup>
+        </div>
+      )}
       <GridContainer>
-        {filteredListings.map(listing => ( // Aqui estamos mapeando as listagens filtradas
+        {filteredListings.map(listing => (
           <GridItem key={listing.id} onClick={() => handleOpenPopup(listing)}>
             <Image src={listing.image} alt={listing.title} />
             <Rating>{listing.rating} ⭐</Rating>
             <Content>
               <Title>{listing.title}</Title>
               <Location>{listing.location}</Location>
-              <Date>Mar 3-6</Date>
+              <Date>{listing.date}</Date>
               <Price>{listing.price} por noite</Price>
             </Content>
           </GridItem>
         ))}
-        
-        {selectedListing && (
-          <Popup>
+      </GridContainer>
+
+      {selectedListing && (
+        <PopupBackground onClick={handleClosePopup}>
+          <Popup onClick={(e) => e.stopPropagation()}>
             <CloseButton onClick={handleClosePopup}>X</CloseButton>
             <Image src={selectedListing.image} alt={selectedListing.title} />
             <Title>{selectedListing.title}</Title>
@@ -291,14 +379,18 @@ function AdminPage() {
             <Description>
               {showFullDescription ? selectedListing.description : `${selectedListing.description.substring(0, 150)}...`}
             </Description>
-            <MoreButton onClick={handleToggleDescription}> 
+            <MoreButton onClick={handleToggleDescription}>
               {showFullDescription ? 'Mostrar menos' : 'Saber mais'}
             </MoreButton>
-            <Button onClick={handleClosePopup}>Reservar</Button>
-
+            <Button onClick={() => handleReservation(selectedListing)}>Reservar</Button>
           </Popup>
-        )}
-      </GridContainer>
+        </PopupBackground>
+      )}
+
+      {showCalendar && (
+        <CalendarPopup reservations={reservations} onClose={handleCloseCalendar} />
+      )}
+
       <Footer>
         <LeftContent>
           <p>2024 AirCnC, Inc</p>
@@ -309,7 +401,7 @@ function AdminPage() {
           <span className="dot">.</span>
         </LeftContent>
         <RightContent>
-          <p>Support and resources</p>
+          <Button onClick={handleOpenCalendar}>Ver Reservas</Button>
         </RightContent>
       </Footer>
     </div>
@@ -317,4 +409,3 @@ function AdminPage() {
 }
 
 export default AdminPage;
-
